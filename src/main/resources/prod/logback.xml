@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+       <property name="LOG_HOME" value="/app/tomcat/logs" />
+
+       <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+              <layout class="ch.qos.logback.classic.PatternLayout">
+                     <Pattern>
+                            %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%30.30logger{30} -> %-20.20method] - %msg%n%ex{full}
+                     </Pattern>
+              </layout>
+       </appender>
+
+       <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+              <file>${LOG_HOME}/debug.log</file>
+              <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                     <Pattern>
+                            %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%30.30logger{30} -> %-20.20method] - %msg%n%ex{full}
+                     </Pattern>
+              </encoder>
+              <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                     <!-- rollover daily -->
+                     <fileNamePattern>${LOG_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
+                     </fileNamePattern>
+                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                            <maxFileSize>10MB</maxFileSize>
+                     </timeBasedFileNamingAndTriggeringPolicy>
+              </rollingPolicy>
+       </appender>
+
+       <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+              <file>${LOG_HOME}/error.log</file>
+              <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                     <Pattern>
+                            %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%30.30logger{30} -> %-20.20method] - %msg%n%ex{full}
+                     </Pattern>
+              </encoder>
+              <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                     <!-- rollover daily -->
+                     <fileNamePattern>${LOG_HOME}/archived/error.%d{yyyy-MM-dd}.%i.log
+                     </fileNamePattern>
+                     <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                            <maxFileSize>10MB</maxFileSize>
+                     </timeBasedFileNamingAndTriggeringPolicy>
+              </rollingPolicy>
+       </appender>
+
+       <!-- Send logs to both console and file audit -->
+       <logger name="com.je.webapp" level="INFO">
+              <appender-ref ref="FILE_DEBUG"/>
+       </logger>
+
+       <logger name="org.springframework.boot.web" level="ERROR">
+              <appender-ref ref="FILE_ERROR"/>
+       </logger>
+
+       <logger name="org.springframework.boot.orm.jpa" level="INFO">
+              <appender-ref ref="FILE_DEBUG"/>
+       </logger>
+
+       <logger name="org.springframework.jdbc" level="INFO">
+              <appender-ref ref="FILE_DEBUG"/>
+       </logger>
+
+       <logger name="org.springframework.web" level="ERROR">
+              <appender-ref ref="FILE_ERROR"/>
+       </logger>
+
+       <root level="INFO">
+              <appender-ref ref="STDOUT"/>
+       </root>
+
+</configuration>
+
