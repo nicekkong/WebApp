@@ -21,13 +21,14 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final static String serverEnv = System.getProperty("spring.profiles.active");
+    private final static SystemResource systemResource = SystemResource.getInstance();
 
     @Autowired
     private IndexService indexService;
 
     @RequestMapping(value = "/index")
     public String loadIndexPage(HttpServletRequest request, Model model) {
-        SystemResource systemResource = SystemResource.getInstance();
+
         String msg = systemResource.getString("result.msg.success");
 
         model.addAttribute("msg", msg);
@@ -62,5 +63,21 @@ public class IndexController {
         result.setResultCode(resultCode);
 
         return result;
+    }
+
+    /**
+     * UI 샘플 시작 예제 화면
+     * @param model
+     * @return
+     */
+    @RequestMapping(value ="starter")
+    public String starter(Model model) {
+
+        String msg = systemResource.getString("result.msg.success");
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("data", "Nicekkong's World!!");
+
+        return "starter";
     }
 }
