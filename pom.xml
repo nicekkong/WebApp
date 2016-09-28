@@ -8,7 +8,7 @@
 	<version>1.0</version>
 	<packaging>war</packaging>
 
-	<name>JE Web App</name>
+	<name>JE WebApp</name>
 	<description>JE Web App for Spring Boot</description>
 
 	<parent>
