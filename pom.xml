@@ -201,7 +201,7 @@
 				</dependencies>
 			</plugin>
 			<!-- 정적파일 ZIP로 만드는 플러그인 -->
-			<!--
+            <!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
