@@ -6,6 +6,7 @@ import com.je.webapp.util.SystemResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,20 +22,25 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final static String serverEnv = System.getProperty("spring.profiles.active");
-    private final static SystemResource systemResource = SystemResource.getInstance();
+    //private final static SystemResource systemResource = SystemResource.getInstance();
 
     @Autowired
     private IndexService indexService;
 
+    @Value("${result.msg.success}")
+    String config_success;
+
+
     @RequestMapping(value = "/index")
     public String loadIndexPage(HttpServletRequest request, Model model) {
 
-        String msg = systemResource.getString("result.msg.success");
+        //String msg = systemResource.getString("result.msg.success");
+        String msg = config_success;
 
         model.addAttribute("msg", msg);
         model.addAttribute("data", "Nicekkong's World!!");
 
-        logger.info(" >>>> Server Env : " + serverEnv);
+        //logger.info(" >>>> Server Env : " + serverEnv);
         return "index";
     }
 
@@ -73,9 +79,9 @@ public class IndexController {
     @RequestMapping(value ="starter")
     public String starter(Model model) {
 
-        String msg = systemResource.getString("result.msg.success");
+        //String msg = systemResource.getString("result.msg.success");
 
-        model.addAttribute("msg", msg);
+        model.addAttribute("msg", config_success);
         model.addAttribute("data", "Nicekkong's World!!");
 
         return "starter";

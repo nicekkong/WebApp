@@ -10,7 +10,9 @@ public class SystemResource {
 	
 	protected static Log logger = LogFactory.getLog(SystemResource.class);
 	
-    private final static String propertiesFile = System.getProperty("spring.profiles.active") + ".config"; 
+    private final static String propertiesFile = System.getProperty("spring.profiles.active") + ".config";
+    //private final static String propertiesFile = "local" + ".config";
+
     private static ResourceBundle rscBundle = ResourceBundle.getBundle(propertiesFile); //ResourceBundle 객체
     private static SystemResource systemResource = null;                                //SystemResource 인스턴스
 

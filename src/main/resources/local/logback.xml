@@ -2,7 +2,7 @@
 
 <configuration>
 
-       <property name="LOG_HOME" value="/Users/nicekkong/Desktop/intellij_workspace/logs/webapp" />
+       <property name="LOG_HOME" value="/Users/1001857/Desktop/intellij_workspace/logs/JEWebApp" />
 
        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
               <layout class="ch.qos.logback.classic.PatternLayout">

@@ -12,3 +12,4 @@ gen
 /mvnw
 /.mvn/
 /.idea/
+/src/main/resources/local/logback.xml
