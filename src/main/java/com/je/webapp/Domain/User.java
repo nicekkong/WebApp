@@ -10,7 +10,7 @@
  *****************************************************************************/
 package com.je.webapp.Domain;
 
-import com.je.webapp.repository.jt.SampleJtRepository;
+import com.je.webapp.util.DateUtil;
 
 import java.sql.Timestamp;
 
@@ -82,8 +82,8 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Timestamp getCreDate() {
-        return creDate;
+    public String getCreDate() {
+        return DateUtil.getFormatTime(creDate, "yyyy-MM-dd");
     }
 
     public void setCreDate(Timestamp creDate) {

@@ -33,9 +33,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     -->
     <link rel="stylesheet" href="/dist/css/skins/skin-blue.min.css">
 
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/common_util.js"></script>
     <script type="text/javascript" src="/js/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,9 +93,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         function fncSetList(json) {
 
+            var userList = json.result.userList;
+            var tbody = jQuery('#listbody');
+            var tbody_content = '';
+            tbody.html('');
+            tbody_content += "<tr>";
+            if(json.totalCnt != 0) {
+
+                for(var i = 0 ; i < json.totalCnt ; i++) {
+                    tbody_content += "  <td>" + i+1 +"</td>";
+                    tbody_content += "  <td>" + userList[i].userId +"</td>";
+                    tbody_content += "  <td>" + userList[i].name +"</td>";
+                    tbody_content += "  <td>" + userList[i].email +"</td>";
+                    tbody_content += "  <td>" + userList[i].company +"</td>";
+                    tbody_content += "  <td>" + userList[i].job +"</td>";
+                    tbody_content += "  <td>" + userList[i].birthday +"</td>";
+                    tbody_content += "  <td>" + userList[i].creDate +"</td>";
+
+                }
+            } else {
+                tbody_content = "<td colspan='8' class='text-gray text-center'>검색 결과가 없습니다.</td>";
+            }
+            tbody_content += "</tr>";
+
+            tbody.html(tbody_content);
+
+
+
+
         }
-
-
     </script>
 </head>
 <!--
