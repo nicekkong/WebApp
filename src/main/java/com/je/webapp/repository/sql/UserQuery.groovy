@@ -17,10 +17,11 @@ class UserQuery {
           FROM app_user
     """;
 
-    final public static String SELECT_USER_BY_ID = """
+    final public static String SELECT_USER_BY_ID_AND_PWD = """
         SELECT *
           FROM  app_user
          WHERE  user_id = :userId
+           AND  password = :password
     """;
 
 }

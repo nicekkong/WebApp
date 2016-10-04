@@ -3,27 +3,27 @@
  *
  * @param boolean isLoading : 로딩 이미지를 띄울지 여부(true/false)
  * @return void
- ****************************************************************/
+****************************************************************/
 function cfShowBlock(isLoading) {
-    //
-	// if(isLoading) {
-    //
-	// 	var loadingDiv = '<img id="loadingImg" src="/images/loading/bigWaiting.gif" width="32" height="32" style="display:none" />';
-	// 	jQuery(loadingDiv).appendTo('body');
-    //
-	// 	jQuery.blockUI({message: jQuery('#loadingImg'),
-	// 		css: {
-	// 			top:  (jQuery(window).height() - 32) /2 + 'px',
-	// 			left: (jQuery(window).width() - 32) /2 + 'px',
-	// 			width: '32px'
-	// 		}}
-	// 	);
-    //
-	// } else {
-    //
-	// 	jQuery.blockUI({message: null});
-    //
-	// }
+
+	if(isLoading) {
+
+		var loadingDiv = '<img id="loadingImg" src="/images/loading/bigWaiting.gif" width="32" height="32" style="display:none" />';
+		$(loadingDiv).appendTo('body');
+
+		$.blockUI({message: $('#loadingImg'),
+            css: {
+                top:  ($(window).height() - 32) /2 + 'px',
+                left: ($(window).width() - 32) /2 + 'px',
+                width: '32px'
+            }}
+        );
+
+	} else {
+
+		$.blockUI({message: null});
+
+	}
 
 }
 
@@ -32,10 +32,10 @@ function cfShowBlock(isLoading) {
  *
  * @param void
  * @return void
- ****************************************************************/
+****************************************************************/
 function cfHideBlock() {
 
-	// $.unblockUI();
+	$.unblockUI();
 
 }
 
@@ -46,7 +46,7 @@ function cfHideBlock() {
  *
  * @param String msg : 에러 메시지
  * @return void
- ****************************************************************/
+****************************************************************/
 function cfPrintErrorMsg(msg) {
 
 	alert(msg);
@@ -60,7 +60,7 @@ function cfPrintErrorMsg(msg) {
  *
  * @param String msg : 일반 메시지
  * @return void
- ****************************************************************/
+****************************************************************/
 function cfPrintCommonMsg(msg) {
 
 	alert(msg);
@@ -74,7 +74,7 @@ function cfPrintCommonMsg(msg) {
  * @param boolean isViewTime : 시간 표시여부
  * @param int divNo          : 날짜 표시 포맷 (0, 1, 2중 하나)
  * @return String            : 구분자로 구분된 날짜 (YYYY-MM-DD HH:MM)
- ****************************************************************/
+****************************************************************/
 function cfGetDivDate(dateStr, isViewTime, divNo) {
 
 	var div = new Array();
@@ -123,7 +123,7 @@ function cfGetDivDate(dateStr, isViewTime, divNo) {
  *
  * @param String str : 문자열
  * @return String    : trim 처리한 문자열. null은 ""를 반환한다.
- ****************************************************************/
+****************************************************************/
 function cfTrim(str) {
 
 	if(str == null) {
@@ -139,7 +139,7 @@ function cfTrim(str) {
  *
  * @param String str : 문자열
  * @return String    : trim 처리한 문자열. null은 ""를 반환한다.
- ****************************************************************/
+****************************************************************/
 function cfChangeNullToEmpty(str) {
 
 	if(str == null) {
@@ -157,7 +157,7 @@ function cfChangeNullToEmpty(str) {
  * @param String cntName  : 현재 글자수 span 태그 id
  * @param String maxCount : 최대 글자수
  * @return void
- *************************************************************************/
+*************************************************************************/
 function cfCheckTextArea(textName, cntName, maxCount) {
 	var now = maxCount - $(textName).val().length;
 	if(now < 0) {
@@ -172,7 +172,7 @@ function cfCheckTextArea(textName, cntName, maxCount) {
  *
  * @param String src : 계산할 문자열
  * @return int       : byte 수
- *************************************************************************/
+*************************************************************************/
 function cfGetStrByteCnt(src) {
 	var byteCnt = 0;
 
@@ -192,13 +192,13 @@ function cfGetStrByteCnt(src) {
  *
  * @param void
  * @return void
- *************************************************************************/
+*************************************************************************/
 function cfDeleteChar(fieldName) {
 	var str = $(fieldName).val();
 
 	if(!str.match(/^([0-9]+)$/)) {
 		$(fieldName).val(str.substr(0, str.length-1));
-	}
+    }
 }
 
 /************************************************************************
@@ -206,36 +206,36 @@ function cfDeleteChar(fieldName) {
  *
  * @param num
  * @return String
- *************************************************************************/
+*************************************************************************/
 function cfFormatComma(num) {
-	if( typeof num != "string"){
-		num = String(num);
-	}
-	var decimal = "";
-	var decimalYn = num.indexOf(".") > -1 ? true : false;
+    if( typeof num != "string"){
+        num = String(num);
+    }
+    var decimal = "";
+    var decimalYn = num.indexOf(".") > -1 ? true : false;
 
-	if ( decimalYn ){
-		decimal = num.split(".")[1];
-		num = num.split(".")[0];
-	}
+    if ( decimalYn ){
+        decimal = num.split(".")[1];
+        num = num.split(".")[0];
+    }
 
-	var length = num.length;
-	var commaNum = "";
+    var length = num.length;
+    var commaNum = "";
 
-	for ( var i = 1; i <= length; i++) {
-		commaNum = num.charAt(length - i) + commaNum;
-		if (i%3 == 0 && length-i != 0) {
-			commaNum = "," + commaNum;
-		}
-	}
+    for ( var i = 1; i <= length; i++) {
+        commaNum = num.charAt(length - i) + commaNum;
+        if (i%3 == 0 && length-i != 0) {
+            commaNum = "," + commaNum;
+        }
+    }
 
-	if ( decimalYn ){
-		//소수점 두자리까지 이용 가능
-		if(decimal.length >1) {
-			decimal = decimal.substring(0, 2);
-		}
-		commaNum = commaNum +"."+ decimal;
-	}
+    if ( decimalYn ){
+        //소수점 두자리까지 이용 가능
+        if(decimal.length >1) {
+            decimal = decimal.substring(0, 2);
+        }
+        commaNum = commaNum +"."+ decimal;
+    }
 
-	return commaNum;
+    return commaNum;
 }

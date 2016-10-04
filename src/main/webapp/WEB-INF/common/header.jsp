@@ -3,6 +3,11 @@
 
 <!-- Main Header -->
 <header class="main-header">
+
+
+
+
+
 <!-- Logo -->
 <a href="index2.html" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -171,7 +176,8 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 2.2.3 -->
-<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<%--<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>--%>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->

@@ -18,12 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -61,6 +60,50 @@ public class UserController {
         }
 
         return result;
+    }
+
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+
+        logger.info(" ===> /user/login called");
+
+        return "/login/login";
+    }
+
+
+    @RequestMapping(value = "/loginProc", method = RequestMethod.POST)
+    //@ResponseBody
+    public void loginProc(@ModelAttribute("user")User user, Model model) {
+        logger.info("=======> loginProc() called");
+
+        String userId = user.getUserId();
+        String password = user.getPassword();
+        User userInfo;
+        Map result;
+
+
+        logger.info(" >>>>>ID : " + userId);
+        logger.info(" >>>>>Password : " + password);
+
+        try{
+            userInfo = userService.getLoginUser(userId, password);
+            if(userInfo != null) {
+                model.addAttribute("userInfo", userInfo);
+                model.addAttribute("result", true);
+                logger.info("로그인 성공~~");
+            } else {
+                model.addAttribute("result", false);
+                logger.info("로그인 실패~~");
+            }
+        } catch(Exception e) {
+            logger.error(e.getLocalizedMessage());
+
+        }
+        //return model;
+
+
     }
 
 }

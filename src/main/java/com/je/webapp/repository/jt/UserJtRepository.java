@@ -39,6 +39,15 @@ public class UserJtRepository {
         return jt.query(UserQuery.SELECT_USER_ALL, param, this::allMapRow);
     }
 
+    public List<User> loginUser(String userId, String password) {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("password", password);
+
+        return jt.query(UserQuery.SELECT_USER_BY_ID_AND_PWD, param, this::allMapRow);
+    }
+
     private User allMapRow(ResultSet rs, int row) throws SQLException {
 
         User user = new User();
@@ -54,7 +63,6 @@ public class UserJtRepository {
         user.setUpdDate(rs.getTimestamp("upd_date"));
 
         return user;
-
     }
 
 

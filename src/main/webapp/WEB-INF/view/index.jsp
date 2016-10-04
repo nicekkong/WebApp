@@ -34,8 +34,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="/dist/css/skins/skin-blue.min.css">
 
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/js/common_util.js"></script>
     <script type="text/javascript" src="/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/js/common_util.js"></script>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
