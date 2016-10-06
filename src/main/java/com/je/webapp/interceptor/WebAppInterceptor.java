@@ -33,6 +33,8 @@ public class WebAppInterceptor extends HandlerInterceptorAdapter {
                 return false;
             }
         } catch (Exception e) {
+            logger.error("preHadler Error~!!", e);
+            //response.sendRedirect("/user/login");
             return false;
         }
 
@@ -84,7 +86,9 @@ public class WebAppInterceptor extends HandlerInterceptorAdapter {
         boolean isLogin = false;
 
         User userInfo = (User)request.getSession().getAttribute("userInfo");
-        logger.info("[Session]UserInfo : " + userInfo.toString());
+
+        logger.info("[Session]UserInfo : " + (userInfo == null ? "NULL": userInfo.toString()));
+
 
         if(userInfo != null && userInfo.getUserId().length() > 0) {
             request.setAttribute("userInfo", userInfo);
