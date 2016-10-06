@@ -21,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,15 +76,15 @@ public class UserController {
 
 
     @RequestMapping(value = "/loginProc", method = RequestMethod.POST)
-    //@ResponseBody
-    public void loginProc(@ModelAttribute("user")User user, Model model) {
+    @ResponseBody
+    public Map<String, Object> loginProc(@ModelAttribute("user")User user, Model model, HttpServletRequest request) {
         logger.info("=======> loginProc() called");
 
         String userId = user.getUserId();
         String password = user.getPassword();
         User userInfo;
-        Map result;
 
+        Map<String, Object> result = new HashMap<>();
 
         logger.info(" >>>>>ID : " + userId);
         logger.info(" >>>>>Password : " + password);
@@ -90,18 +92,18 @@ public class UserController {
         try{
             userInfo = userService.getLoginUser(userId, password);
             if(userInfo != null) {
-                model.addAttribute("userInfo", userInfo);
-                model.addAttribute("result", true);
+                request.getSession().setAttribute("userInfo", userInfo);
+                result.put("loginYn", "Y");
                 logger.info("로그인 성공~~");
             } else {
-                model.addAttribute("result", false);
+
+                result.put("loginYn", "N");
                 logger.info("로그인 실패~~");
             }
         } catch(Exception e) {
             logger.error(e.getLocalizedMessage());
-
         }
-        //return model;
+        return result;
 
 
     }

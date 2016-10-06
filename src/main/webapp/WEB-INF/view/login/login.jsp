@@ -69,13 +69,19 @@
                 },
                 //error: function(xhr, textStatus, errorThrown) {
                 error:function(request,status,error){
-                    cfPrintErrorMsg("요청 중 서버에서 에러가 발생하였습니다.");
-                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    cfPrintErrorMsg("요청 중 서버에서 중요한 에러가 발생하였습니다.");
+                    console.dir(request);
+                    console.dir(status);
+                    console.dir(error);
+
+                    //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 },
                 success: function(json, textStatus) {
-                    if(json.result != true) {
+                    if(json.loginYn === "N") {
                         cfPrintErrorMsg("아이디/패스워드를 다시 확인해주세요.");
+                        return ;
                     }
+                    document.location.href = "/index";
                 },
                 complete: function(xhr, textStatus) {
                     cfHideBlock();
@@ -94,31 +100,28 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-
-        <form action="../../index2.html" method="post">
-            <div class="form-group has-feedback">
+        <div class="form-group has-feedback">
                 <input type="text" id="user_id" class="form-control" placeholder="User ID">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" id="password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> Remember Me
-                        </label>
-                    </div>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" id="password" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox"> Remember Me
+                    </label>
                 </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" id="btn_login" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                </div>
-                <!-- /.col -->
             </div>
-        </form>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" id="btn_login" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+            <!-- /.col -->
+        </div>
 
         <%--<div class="social-auth-links text-center">
             <p>- OR -</p>

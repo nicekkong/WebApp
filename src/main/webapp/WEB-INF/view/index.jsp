@@ -167,10 +167,13 @@ desired effect
         <section class="content">
 
             <!-- Your Page Content Here -->
-            ${msg}
+            Data From properties : ${msg}
             <br/>
-            ${data}
-
+            Data From Controller : ${data}
+            <br />
+            Data From Reqeust : ${userInfo.email}
+            <br />
+            Data From Session : ${sessionScope.userInfo.job}
             <br/><br/>
             <h4>DB Conn. Test</h4>
             <button id="userSearchBtn" type="button" class="btn btn-block btn-primary btn-sm text-center" style="width:100px">사용자 조회</button>

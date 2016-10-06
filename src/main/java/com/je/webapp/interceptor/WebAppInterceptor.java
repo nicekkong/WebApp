@@ -3,62 +3,47 @@ package com.je.webapp.interceptor;
 import com.je.webapp.Domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class WebAppInterceptor extends HandlerInterceptorAdapter {
     
     static final private Logger logger = LoggerFactory.getLogger(WebAppInterceptor.class);
     
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+                                                                                        throws Exception {
 
-        if ( logger.isDebugEnabled() ) {
-            logger.debug("request.getRequestURL() => [" + request.getRequestURL() + "]");
-            //logger.debug("request.getRequestURI() => [" + request.getRequestURI() + "]");
-            /*try {
-                Enumeration<String> headerNames = request.getHeaderNames();
+        logger.debug("request.getRequestURL() => [" + request.getRequestURL() + "]");
 
-                while (headerNames.hasMoreElements()) {
-                    String key = headerNames.nextElement();
-                    String val = request.getHeader(key);
-                    logger.debug("Reqeust Header Key = >[" + String.format("%-30s", key) + "] | value = [" + String.format("%-100s", val) + "]");
-                }
+        boolean isAjaxCall = false;
 
-                Enumeration<String> parameterNames = request.getParameterNames();
-
-                while (parameterNames.hasMoreElements()) {
-                    String key = parameterNames.nextElement();
-                    String val = request.getParameter(key);
-                    logger.debug("Reqeust Parameter Key = >[" + String.format("%-27s", key) + "] | value = [" + String.format("%-100s", val) + "]");
-                }
-            } catch (Throwable t) {
-                logger.warn("Can't Read Request Header List !!!" + t.getMessage(), t);
-            }*/
+        if (request.getHeader("X-Requested-With") != null
+                && request.getHeader("X-Requested-With").toLowerCase().equals("xmlhttprequest")) {
+            isAjaxCall = true;
         }
 
-        HttpSession session = request.getSession();
-        User userInfo = (User)session.getAttribute("userInfo");
-
-        if(userInfo != null) {
-            logger.info("[Session]UserInfo : " + userInfo.toString());
-            session.setAttribute("userInfo", userInfo); // TODO: 해당 로직이 필요한지는 추가 확인 필요
-            return true;
-        } else {
-            response.sendRedirect("/user/login");   // 비로그인 사용자는 로그인 화면으로 넘겨 버린다.
+        try {
+            // 로그인 상태를 확인한다.
+            if (!isLogin(request)) {
+                displayLoginPage(response, isAjaxCall); // Ajax 호출 여부에 따라 처리한다
+                return false;
+            }
+        } catch (Exception e) {
             return false;
         }
+
+        return true;
 
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        super.postHandle(request, response, handler, modelAndView);
-
+        // super.postHandle(request, response, handler, modelAndView);
+    /*
         logger.info("======>postHandler() called~!!");
 
         HttpSession session = request.getSession();
@@ -72,5 +57,39 @@ public class WebAppInterceptor extends HandlerInterceptorAdapter {
             session.setAttribute("userInfo", userInfo);
             response.sendRedirect("/index");
         }
+        */
+    }
+
+    /**
+     * ajax 요청이면 json응답, 일반 요청이면 로그인 페이지로 redirect 처리하는 메소드.
+     *
+     * @param
+     * @param
+     * @return void
+     */
+    private void displayLoginPage(HttpServletResponse response, boolean isAjaxCall) throws IOException {
+
+        if (isAjaxCall) {
+            String json = "{\"loginyn\":\"N\", \"authorityyn\":\"N\"}";
+            logger.debug("displayLoginPage json=" + json);
+        } else {
+            response.sendRedirect("/user/login");
+        }
+
+    }
+
+
+    private boolean isLogin(HttpServletRequest request) throws Exception {
+
+        boolean isLogin = false;
+
+        User userInfo = (User)request.getSession().getAttribute("userInfo");
+        logger.info("[Session]UserInfo : " + userInfo.toString());
+
+        if(userInfo != null && userInfo.getUserId().length() > 0) {
+            request.setAttribute("userInfo", userInfo);
+            isLogin = true;
+        }
+        return isLogin;
     }
 }
