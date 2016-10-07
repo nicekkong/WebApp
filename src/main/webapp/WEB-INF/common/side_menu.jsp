@@ -16,7 +16,7 @@
                 <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p>${userInfo.name} 님</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -51,6 +51,8 @@
                     <li><a href="#">Link in level 2</a></li>
                 </ul>
             </li>
+            <li><a href="/index2.html"><i class="fa fa-link"></i> <span>Sample Template</span></a></li>
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

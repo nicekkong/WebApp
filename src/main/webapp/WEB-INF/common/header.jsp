@@ -1,6 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
+<script>
+
+    function fncLogoutProc() {
+
+        jQuery.ajax({
+            url: '/user/logoutProc',
+            data: {},
+            beforeSend: function(xmlHttpRequest) {
+                cfShowBlock(true);
+            },
+            //error: function(xhr, textStatus, errorThrown) {
+            error:function(request,status,error){
+                cfPrintErrorMsg("요청 중 서버에서 중요한 에러가 발생하였습니다.");
+                console.dir(request);
+                console.dir(status);
+                console.dir(error);
+
+                //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            success: function(json, textStatus) {
+                if(json.result === "fail") {
+                    cfPrintErrorMsg("로그아웃에 실패했습니다. \n잠시 뒤 다시 시도해주세요.");
+                    return ;
+                }
+                alert("Bye~bye~~ ㅠ_ㅠ");
+                document.location.href = "/user/login";
+            },
+            complete: function(xhr, textStatus) {
+                cfHideBlock();
+            }
+        });
+
+
+    }
+
+</script>
+
+
 <!-- Main Header -->
 <header class="main-header">
 
@@ -13,7 +51,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>A</b>LT</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>Admin</b>LTE</span>
+    <span class="logo-lg"><b>@nicekkong</b>.com</span>
 </a>
 
 <!-- Header Navbar -->
@@ -127,7 +165,7 @@
                     <!-- The user image in the navbar-->
                     <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                    <span class="hidden-xs">Alexander Pierce</span>
+                    <span class="hidden-xs">Welcome ${userInfo.name} 님</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- The user image in the menu -->
@@ -160,7 +198,7 @@
                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                         </div>
                         <div class="pull-right">
-                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                            <a href="#" class="btn btn-default btn-flat" onclick="fncLogoutProc();">Sign out</a>
                         </div>
                     </li>
                 </ul>

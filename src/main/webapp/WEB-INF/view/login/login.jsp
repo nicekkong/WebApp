@@ -51,6 +51,13 @@
                 //return false;
             })
 
+            /*엔터키 이벤트 */
+            jQuery(document).keydown(function (key) {
+                if(key.keyCode === 13) {
+                    fncLoginProc()
+                }
+            });
+
         });
 
         function fncLoginProc() {

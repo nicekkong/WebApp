@@ -104,8 +104,28 @@ public class UserController {
             logger.error(e.getLocalizedMessage());
         }
         return result;
+    }
 
+
+    @RequestMapping(value = "/logoutProc", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> logoutProc(HttpServletRequest request) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            request.getSession().invalidate();
+            result.put("result", "succ");
+            logger.info("Logout Success~!!");
+            logger.info("Logout Session : " + request.getSession().getAttribute("userInfo"));
+        } catch (Exception e) {
+            logger.error("Logout Error~!!");
+            result.put("result", "fail");
+        }
+        return  result;
 
     }
+
+
 
 }

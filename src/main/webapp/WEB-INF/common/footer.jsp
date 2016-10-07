@@ -12,7 +12,7 @@
         Make you better
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="http://www.nicekkong.com">JE Studio</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2016 <a href="http://www.nicekkong.com">nicekkong.com</a>.</strong> All rights reserved.
 </footer>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
 Both of these plugins are recommended to enhance the
