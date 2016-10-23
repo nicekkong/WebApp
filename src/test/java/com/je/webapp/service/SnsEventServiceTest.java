@@ -112,4 +112,27 @@ public class SnsEventServiceTest {
 
     }
     */
+
+
+    @Test
+    public void callMethod() {
+
+        calc(3, 10);
+    }
+
+    public void calc(int divisor, int bound) {
+
+        int result = 1;
+
+        while(result == 1) {
+            if(bound%divisor == 0) {
+                result = bound;
+                logger.info("result ===> " + result);
+            }
+            bound--;
+        }
+        logger.info("result : " + result);
+
+    }
 }
+

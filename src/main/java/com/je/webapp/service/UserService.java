@@ -54,4 +54,21 @@ public class UserService {
             return null;
         }
     }
+
+    /**
+     * 입력받은 ID가 기존에 등록된 ID 인지 체크한다
+     * @param inputId 중복 체크 ID 값
+     * @return
+     * @throws Exception
+     */
+    public boolean isDupId(String inputId) throws Exception {
+
+        boolean isDup = false;
+
+        if(userJtRepository.chekckDupId(inputId) > 0) {
+            isDup = true;
+        }
+        return isDup;
+    }
+
 }

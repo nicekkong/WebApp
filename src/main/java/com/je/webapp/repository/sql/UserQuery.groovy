@@ -18,10 +18,16 @@ class UserQuery {
     """;
 
     final public static String SELECT_USER_BY_ID_AND_PWD = """
-        SELECT *
+        SELECT  *
           FROM  app_user
          WHERE  user_id = :userId
            AND  password = :password
+    """;
+
+    final public static String SELECT_DUP_ID = """
+        SELECT  COUNT(*) AS cnt
+          FROM  app_user
+         WHERE  user_id = :userId
     """;
 
 }

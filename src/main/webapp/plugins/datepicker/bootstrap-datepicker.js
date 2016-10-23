@@ -158,7 +158,6 @@
 					lang = defaults.language;
 			}
 			o.language = lang;
-
 			switch (o.startView){
 				case 2:
 				case 'decade':
@@ -745,8 +744,16 @@
 				todaytxt = dates[this.o.language].today || dates['en'].today || '',
 				cleartxt = dates[this.o.language].clear || dates['en'].clear || '',
 				tooltip;
-			this.picker.find('.datepicker-days thead th.datepicker-switch')
-						.text(dates[this.o.language].months[month]+' '+year);
+			/**
+			 * 한글(language='kr')이면 년/월 표현 방식 변경
+			 */
+			if(this.o.language === 'kr') {
+				this.picker.find('.datepicker-days thead th.datepicker-switch')
+					.text(year + '년 ' + dates[this.o.language].months[month]);
+			} else {
+				this.picker.find('.datepicker-days thead th.datepicker-switch')
+					.text(dates[this.o.language].months[month] + ' ' + year);
+			}
 			this.picker.find('tfoot th.today')
 						.text(todaytxt)
 						.toggle(this.o.todayBtn !== false);

@@ -22,7 +22,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(webAppInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/*");
+                .excludePathPatterns("/user/**/*");
     }
     
     @Bean

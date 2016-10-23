@@ -102,7 +102,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>@nicekkong</b>.com</a>
+        <a href="/index"><b>@nicekkong</b>.com</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -142,7 +142,7 @@
         <!-- /.social-auth-links -->
 
         <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="/user/register" class="text-center">Register a new membership</a>
 
     </div>
     <!-- /.login-box-body -->

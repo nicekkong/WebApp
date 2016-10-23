@@ -66,4 +66,17 @@ public class UserJtRepository {
     }
 
 
+    public int chekckDupId(String userId) {
+        SqlParameterSource param= new MapSqlParameterSource()
+                .addValue("userId", userId);
+
+        return jt.queryForObject(UserQuery.SELECT_DUP_ID, param, this::checkDupIdRow);
+    }
+    private int checkDupIdRow(ResultSet rs, int row) throws SQLException {
+
+        return rs.getInt("cnt");
+
+    }
+
+
 }

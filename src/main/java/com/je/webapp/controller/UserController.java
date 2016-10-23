@@ -126,6 +126,27 @@ public class UserController {
 
     }
 
+    @RequestMapping(value ="/register", method = RequestMethod.GET)
+    public String goRegister() {
+        logger.info(" ======> goRegister()");
 
+        return "/login/register";
+    }
 
+    @RequestMapping(value="/idDup/check", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> checkIdDup(@RequestParam(value="inputId")String inputId) {
+
+        Map<String, Object> result = new HashMap<>();
+        boolean isDup = false;
+
+        try {
+            isDup = userService.isDupId(inputId);
+            result.put("isDup", isDup);
+            logger.debug("ID Dup Check ===> ID: " + inputId + " isDup ===> " + isDup);
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage(), e);
+        }
+        return result;
+    }
 }
