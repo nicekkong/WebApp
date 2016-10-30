@@ -86,13 +86,19 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
-
+            nicekkong.com~!!!
             <!-- Your Page Content Here -->
             <p>${msg}</p>
             <p>${data}</p>
 
         </section>
         <!-- /.content -->
+
+
+
+
+
+
     </div>
     <!-- /.content-wrapper -->
     <%@include file="/WEB-INF/common/footer.jsp" %>

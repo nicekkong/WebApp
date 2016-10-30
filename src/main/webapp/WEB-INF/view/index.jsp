@@ -97,10 +97,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var tbody = jQuery('#listbody');
             var tbody_content = '';
             tbody.html('');
-            tbody_content += "<tr>";
             if(json.totalCnt != 0) {
 
                 for(var i = 0 ; i < json.totalCnt ; i++) {
+                    tbody_content += "<tr>";
                     tbody_content += "  <td>" + i+1 +"</td>";
                     tbody_content += "  <td>" + userList[i].userId +"</td>";
                     tbody_content += "  <td>" + userList[i].name +"</td>";
@@ -109,12 +109,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     tbody_content += "  <td>" + userList[i].job +"</td>";
                     tbody_content += "  <td>" + userList[i].birthday +"</td>";
                     tbody_content += "  <td>" + userList[i].creDate +"</td>";
-
+                    tbody_content += "</tr>";
                 }
             } else {
-                tbody_content = "<td colspan='8' class='text-gray text-center'>검색 결과가 없습니다.</td>";
+                tbody_content = "<tr><td colspan='8' class='text-gray text-center'>검색 결과가 없습니다.</td></tr>";
             }
-            tbody_content += "</tr>";
+
 
             tbody.html(tbody_content);
 

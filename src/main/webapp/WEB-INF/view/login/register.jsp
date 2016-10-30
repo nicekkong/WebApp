@@ -82,6 +82,11 @@
                 }
             });
 
+            <!-- Register 버튼 이벤트 등록 -->
+            jQuery('#registerBtn').click(function(){
+               fncRegisger();
+            });
+
         });
 
 
@@ -194,7 +199,93 @@
             }
             console.log(funChkPassword.chkPassword );
         }
-        funChkPassword.chkPassword = false;
+        funChkPassword.chkPassword = false;     // 메모리이모제이션
+
+
+        <!-- 등록 처리 메서드 -->
+        function fncRegisger() {
+
+            // 입력받은 사용자 정보를 셋팅한다.
+            var userInfo = setUserInfo();
+
+            // 입력값을 검증한다.
+            var errMsg = validateInput(userInfo);
+            if(errMsg !== "") {
+                var msg = '아래 입력 값들을 다시 확인해주세요\n' + errMsg.toUpperCase();
+                $('#myModal').on('hidden.bs.modal', function (e) {
+                    e.preventDefault();
+                });
+                showModal(msg, 'Check Input Again~!!');
+                return false;
+            }
+
+
+/*
+            jQuery.ajax({
+                url: '/user/idDup/check',
+                data: {
+                    inputId : input_id,
+                },
+                beforeSend: function(xmlHttpRequest) {
+                    cfShowBlock(true);
+                },
+                //error: function(xhr, textStatus, errorThrown) {
+                error:function(request,status,error){
+                    cfPrintErrorMsg("요청 중 서버에서 중요한 에러가 발생하였습니다.");
+                    console.dir(request);
+                    console.dir(status);
+                    console.dir(error);
+                },
+                success: function(json, textStatus) {
+                    fncIdSetting(json);
+
+                },
+                complete: function(xhr, textStatus) {
+                    cfHideBlock();
+                }
+            });
+*/
+
+
+
+        }
+
+        /**
+         * 입력받은 사용자 정보를 셋팅한다.
+         */
+        function setUserInfo() {
+
+            var userInfo = {
+                'userId': jQuery('#user_id').val(),
+                'password' : jQuery('#password').val(),
+                'name' : jQuery('#name').val(),
+                'email' : jQuery('#email').val(),
+                'company' : jQuery('#company').val(),
+                'job' : jQuery('#job option:selected').val(),
+                'birthday' : jQuery('#birthday').val()
+            };
+            console.log(userInfo);
+            return userInfo;
+
+        }
+
+        /**
+         * 입력받은 값을 검증한다.
+         */
+        function validateInput(userInfoObj) {
+            var errMsg = "";
+            jQuery.each(userInfoObj, function(k, v){
+                if(v === "") {
+                    errMsg += k + ",";
+                }
+            });
+
+            errMsg = errMsg.replace(/,$/, '');  // 가장 맨뒤 항목의 , 를 없애준다.
+
+            console.log("errMsg : ", errMsg);
+            return errMsg;
+        }
+
 
     </script>
 
@@ -252,11 +343,11 @@
                 <div class="form-group has-feedback">
                     <select id="job" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" data-placeholder="업무">
                         <option> </option>
-                        <option value="development">Application</option>
-                        <option value="consultant">Consulting</option>
-                        <option value="infra">Infra</option>
-                        <option value="system_op">System Operation</option>
-                        <option value="uxui">UX/UI Design</option>
+                        <option value="development">Application 개발</option>
+                        <option value="consultant">컨설팅</option>
+                        <option value="infra">인프라</option>
+                        <option value="system_op">시스템 운영</option>
+                        <option value="uxui">UX/UI 디자인</option>
                     </select>
                 </div>
             </div>
@@ -285,7 +376,7 @@
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                <button type="submit" class="btn btn-primary btn-block btn-flat" id="registerBtn">Register</button>
             </div>
             <!-- /.col -->
         </div>
