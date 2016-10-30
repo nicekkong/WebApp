@@ -154,7 +154,7 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
+                Page Header limgamchoi
                 <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
