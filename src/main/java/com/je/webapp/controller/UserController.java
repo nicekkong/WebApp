@@ -149,4 +149,29 @@ public class UserController {
         }
         return result;
     }
+
+    /**
+     * 신규 회원 등록
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/process/Register", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> doRegister(User user) {
+        Map<String, Object> result = new HashMap<>();
+        boolean isSuccess = false;
+
+        logger.info("user Info : " + user.toString());
+
+
+        try {
+            userService.registerUser(user);
+            isSuccess = true;
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage(), e);
+            isSuccess = false;
+        }
+        result.put("isRegister", isSuccess);
+        return result;
+    }
 }

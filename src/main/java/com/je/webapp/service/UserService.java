@@ -71,4 +71,15 @@ public class UserService {
         return isDup;
     }
 
+
+    public boolean registerUser(User user) throws Exception {
+
+        boolean isSuccess = false;
+
+        userJtRepository.insertAppUser(user.getUserId(), user.getPassword(), user.getName(),
+                user.getCompany(), user.getJob(), user.getBirthday(), user.getEmail());
+
+        return isSuccess;
+    }
+
 }

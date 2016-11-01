@@ -101,7 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 for(var i = 0 ; i < json.totalCnt ; i++) {
                     tbody_content += "<tr>";
-                    tbody_content += "  <td>" + i+1 +"</td>";
+                    tbody_content += "  <td>" + i +"</td>";
                     tbody_content += "  <td>" + userList[i].userId +"</td>";
                     tbody_content += "  <td>" + userList[i].name +"</td>";
                     tbody_content += "  <td>" + userList[i].email +"</td>";
@@ -114,8 +114,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 tbody_content = "<tr><td colspan='8' class='text-gray text-center'>검색 결과가 없습니다.</td></tr>";
             }
-
-
             tbody.html(tbody_content);
 
 

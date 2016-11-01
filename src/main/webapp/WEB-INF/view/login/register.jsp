@@ -111,7 +111,7 @@
             jQuery.ajax({
                 url: '/user/idDup/check',
                 data: {
-                    inputId : input_id,
+                    inputId : input_id
                 },
 //                beforeSend: function(xmlHttpRequest) {
 //                    cfShowBlock(true);
@@ -167,11 +167,11 @@
                 });
                 showModal(msg, 'ID Duplication Check!!');
                 jQuery('#input-id').val('');
-                jQuery('#user_id').val('');
+                jQuery('#userId').val('');
             } else {
                 msg = '[' + jQuery('#input-id').val() + ']는 정말 멋진 ID입니다!!';
                 showModal(msg, 'ID Duplication Check!!');
-                jQuery('#user_id').val(jQuery('#input-id').val());
+                jQuery('#userId').val(jQuery('#input-id').val());
                 $('#myModal').on('hidden.bs.modal', function (e) {
                     jQuery('#password').focus();
                     e.preventDefault();
@@ -184,8 +184,8 @@
          */
         function funChkPassword() {
 
-            var password = jQuery('#password').val();
-            var repassword = jQuery('#re-password').val();
+            var password    = jQuery('#password').val();
+            var repassword  = jQuery('#re-password').val();
 
             //console.log(password + ' : ' + repassword );
 
@@ -208,10 +208,12 @@
             // 입력받은 사용자 정보를 셋팅한다.
             var userInfo = setUserInfo();
 
+            console.log(userInfo);
+
             // 입력값을 검증한다.
             var errMsg = validateInput(userInfo);
             if(errMsg !== "") {
-                var msg = '아래 입력 값들을 다시 확인해주세요\n' + errMsg.toUpperCase();
+                var msg = '아래 입력 값들을 다시 확인해주세요<br/><br/>' + errMsg.toUpperCase();
                 $('#myModal').on('hidden.bs.modal', function (e) {
                     e.preventDefault();
                 });
@@ -219,12 +221,17 @@
                 return false;
             }
 
-
-/*
+            // Ajax 요청
             jQuery.ajax({
-                url: '/user/idDup/check',
+                url: '/user/process/Register',
                 data: {
-                    inputId : input_id,
+                    userId  : userInfo.userId,
+                    password: userInfo.password,
+                    name    : userInfo.name,
+                    job     : userInfo.job,
+                    email   : userInfo.email,
+                    company : userInfo.company,
+                    birthday: userInfo.birthday
                 },
                 beforeSend: function(xmlHttpRequest) {
                     cfShowBlock(true);
@@ -237,17 +244,13 @@
                     console.dir(error);
                 },
                 success: function(json, textStatus) {
-                    fncIdSetting(json);
+                    fncRegisterAlert(json);
 
                 },
                 complete: function(xhr, textStatus) {
                     cfHideBlock();
                 }
             });
-*/
-
-
-
         }
 
         /**
@@ -256,17 +259,16 @@
         function setUserInfo() {
 
             var userInfo = {
-                'userId': jQuery('#user_id').val(),
+                'userId': jQuery('#userId').val(),
                 'password' : jQuery('#password').val(),
                 'name' : jQuery('#name').val(),
                 'email' : jQuery('#email').val(),
                 'company' : jQuery('#company').val(),
                 'job' : jQuery('#job option:selected').val(),
-                'birthday' : jQuery('#birthday').val()
+                'birthday' : jQuery('#birthday').val().replace('-', '').replace('-', '')
             };
             console.log(userInfo);
             return userInfo;
-
         }
 
         /**
@@ -278,13 +280,46 @@
                 if(v === "") {
                     errMsg += k + ",";
                 }
+
             });
 
+            if(!jQuery(":checkbox[id='agreeTerm']").is(":checked")) {
+                errMsg += "<p>\n가입 동의에 체크를 해주세요.</p>";
+            }
             errMsg = errMsg.replace(/,$/, '');  // 가장 맨뒤 항목의 , 를 없애준다.
 
             console.log("errMsg : ", errMsg);
             return errMsg;
         }
+
+        function fncRegisterAlert(json) {
+
+            var isSuccess = json.isRegister == true? true : false;
+            var msg = "";
+            var title = "회원 등록";
+
+            if(isSuccess) {
+                msg = "성공적으로 등록됐습니다!!<br/>가입을 진심으로 환영합니다~!! <br/>로그인 후, 이용바랍니다.";
+                showModal(msg, title);
+                setTimeout(function() {
+                    location.href = "/user/login";
+                }, 2500);
+            } else {
+                msg = "저장중 오류가 발생했습니다. <br/>시스템 관리자에게 문의 바랍니다.";
+                showModal(msg, title);
+            }
+        }
+
+        function showTerm() {
+
+            var title = "회원가입 이용약관";
+            var msg = "<p>우리는 좋은 서비스 입니다.</p>";
+            msg += "회원 가입해주실 거죠?";
+            msg += "<br/>동의하시면 체크박스에 체크해주세요.";
+
+            showModal(msg, title);
+        }
+
 
 
     </script>
@@ -305,7 +340,7 @@
             <div class="col-xs-8">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" id='input-id' placeholder="ID">
-                    <input type="hidden" class="form-control" id='user_id'>
+                    <input type="hidden" class="form-control" id='userId'>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
             </div>
@@ -370,7 +405,7 @@
             <div class="col-xs-8">
                 <div class="checkbox icheck">
                     <label>
-                        <input type="checkbox"> I agree to the <a href="#">terms</a>
+                        <input type="checkbox" id="agreeTerm"> I agree to the <a href="#" onclick="showTerm();">terms</a>
                     </label>
                 </div>
             </div>
@@ -395,9 +430,6 @@
     <!-- /.form-box -->
 </div>
 <!-- /.register-box -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -457,11 +489,6 @@
     $(".select2").select2();
 
 </script>
-
-
-
-
-
 
 </body>
 </html>

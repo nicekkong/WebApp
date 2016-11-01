@@ -30,4 +30,8 @@ class UserQuery {
          WHERE  user_id = :userId
     """;
 
+    final public static String INSERT_NEW_USER = """
+        INSERT INTO app_user (user_id, password, name, email, company, job, birthday, cre_date) VALUES
+         (:userId, :password, :name, :email, :company, :job, :birthday, now())
+    """;
 }

@@ -38,16 +38,6 @@ public class UserJtRepository {
                 .addValue("", "");
         return jt.query(UserQuery.SELECT_USER_ALL, param, this::allMapRow);
     }
-
-    public List<User> loginUser(String userId, String password) {
-
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("userId", userId)
-                .addValue("password", password);
-
-        return jt.query(UserQuery.SELECT_USER_BY_ID_AND_PWD, param, this::allMapRow);
-    }
-
     private User allMapRow(ResultSet rs, int row) throws SQLException {
 
         User user = new User();
@@ -65,6 +55,16 @@ public class UserJtRepository {
         return user;
     }
 
+    public List<User> loginUser(String userId, String password) {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("password", password);
+
+        return jt.query(UserQuery.SELECT_USER_BY_ID_AND_PWD, param, this::allMapRow);
+    }
+
+
 
     public int chekckDupId(String userId) {
         SqlParameterSource param= new MapSqlParameterSource()
@@ -76,6 +76,21 @@ public class UserJtRepository {
 
         return rs.getInt("cnt");
 
+    }
+
+
+    public void insertAppUser(String userId, String password, String name, String company,
+                                String job, String birthday, String email) {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("password", password)
+                .addValue("name", name)
+                .addValue("email", email)
+                .addValue("company", company)
+                .addValue("job", job)
+                .addValue("birthday", birthday);
+        jt.update(UserQuery.INSERT_NEW_USER, param);
     }
 
 
