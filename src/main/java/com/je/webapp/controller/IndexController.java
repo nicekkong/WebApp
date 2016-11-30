@@ -2,7 +2,6 @@ package com.je.webapp.controller;
 
 import com.je.webapp.form.ResultForm;
 import com.je.webapp.service.IndexService;
-import com.je.webapp.util.SystemResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,5 +85,18 @@ public class IndexController {
         model.addAttribute("data", "Nicekkong's World!!");
 
         return "starter";
+    }
+
+    @RequestMapping(value="/freeBoard", method = RequestMethod.GET)
+    public String moveToFreeBoard(HttpServletRequest request, Model model) {
+        String msg = config_success;
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("data", "Nicekkong's World!!");
+
+        //logger.info(" >>>> Server Env : " + serverEnv);
+        return "freeBoard";
+
+
     }
 }

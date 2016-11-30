@@ -134,5 +134,42 @@ public class SnsEventServiceTest {
         logger.info("result : " + result);
 
     }
+
+    @Test
+    public void testStaticMethod1() {
+
+        StringBuffer a = new StringBuffer("original ");
+
+        logger.info("Before a ====> [" + a + "]");
+        logger.info("\taddTEST(a) called~!!!");
+        addTEST(a);
+        logger.info("After a ====> [" + a + "]");
+    }
+
+    private void addTEST(StringBuffer a) {
+        a.append("TEST~!!!");
+    }
+
+    @Test
+    public void testStaticMethod2() {
+
+        Integer a = new Integer(0);
+
+        logger.info("Before a ====> [" + a + "]");
+        logger.info("\taddTEN(a) called~!!!");
+        addTEN(a);
+        logger.info("After a ====> [" + a + "]");
+    }
+
+    private void addTEN(Integer a) {
+        a = a.sum(1, 2);
+        logger.info("\t\t\tafter addTen() a ===> " + a);
+    }
+
+
+
+
+
+
 }
 

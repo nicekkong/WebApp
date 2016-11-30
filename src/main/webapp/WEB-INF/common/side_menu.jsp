@@ -36,10 +36,10 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
+            <li class="header">메뉴를 골라주세요</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+            <li id="freeBoard"><a href="/freeBoard"><i class="fa fa-link"></i> <span>자유 게시판</span></a></li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                     <span class="pull-right-container">
@@ -58,3 +58,25 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+<script>
+
+    var pathName = location.pathname;
+    //console.log("class Name : " , jQuery('.sidebar-menu').attr('id'));
+    var activeSelectMenu= (function (){
+        console.log("side_menu~!!!!!!!!!", pathName);
+
+        var menu_list = jQuery('.sidebar-menu');
+        //console.log(menu_list);
+        //console.log(menu_list.find('li').length);
+        menu_list.find('li').each(function(index, element){
+            //console.log(index, ':' , jQuery(element).attr('id'));
+            console.log("this", element.id, "pathname", pathName);
+            jQuery(this).removeClass('active');
+            if(pathName.indexOf(element.id) > 0) {
+                console.log("here~!!!", pathName.indexOf(element.id));
+                jQuery(this).addClass('active');
+            }
+        });
+    })();
+
+</script>
