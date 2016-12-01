@@ -63,17 +63,17 @@
     var pathName = location.pathname;
     //console.log("class Name : " , jQuery('.sidebar-menu').attr('id'));
     var activeSelectMenu= (function (){
-        console.log("side_menu~!!!!!!!!!", pathName);
+        //console.log("side_menu~!!!!!!!!!", pathName);
 
         var menu_list = jQuery('.sidebar-menu');
         //console.log(menu_list);
         //console.log(menu_list.find('li').length);
         menu_list.find('li').each(function(index, element){
             //console.log(index, ':' , jQuery(element).attr('id'));
-            console.log("this", element.id, "pathname", pathName);
+            //console.log("this", element.id, "pathname", pathName);
             jQuery(this).removeClass('active');
             if(pathName.indexOf(element.id) > 0) {
-                console.log("here~!!!", pathName.indexOf(element.id));
+                //console.log("here~!!!", pathName.indexOf(element.id));
                 jQuery(this).addClass('active');
             }
         });
