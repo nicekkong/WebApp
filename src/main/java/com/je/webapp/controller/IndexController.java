@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,16 +86,5 @@ public class IndexController {
         return "starter";
     }
 
-    @RequestMapping(value="/freeBoard", method = RequestMethod.GET)
-    public String moveToFreeBoard(HttpServletRequest request, Model model) {
-        String msg = config_success;
 
-        model.addAttribute("msg", msg);
-        model.addAttribute("data", "Nicekkong's World!!");
-
-        //logger.info(" >>>> Server Env : " + serverEnv);
-        return "freeBoard";
-
-
-    }
 }

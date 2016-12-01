@@ -57,12 +57,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 type: 'POST'
             });
 
-            jQuery('#userSearchBtn').click(function(){
-                fncSearchUser();
-            });
 
+            fncSearchList();
 
         });
+
+        function fncSearchList() {
+
+            jQuery.ajax({
+                url: '/board/getBoardLise',
+                beforeSend: function(xmlHttpRequest) {
+                    cfShowBlock(true);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    cfPrintErrorMsg("요청 중 서버에서 에러가 발생하였습니다.");
+                },
+                success: function(json, textStatus) {
+                    if(json.resultCode === 0) {
+                        fncSetList(json);
+                    } else {
+                        cfPrintErrorMsg("요청 중 서버에서 에러가 발생하였습니다.");
+                    }
+                },
+                complete: function(xhr, textStatus) {
+                    cfHideBlock();
+                }
+            });
+        }
+
+
 
 
         function fncSearchUser() {
@@ -152,12 +175,12 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header limgamchoi
+                Free board
                 <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 자유게시판</a></li>
+                <%--<li class="active">Here</li>--%>
             </ol>
         </section>
 
@@ -165,38 +188,25 @@ desired effect
         <section class="content">
 
             <!-- Your Page Content Here -->
-            Data From properties : ${msg}
-            <br/>
-            Data From Controller : ${data}
-            <br />
-            Data From Reqeust : ${userInfo.email}
-            <br />
-            Data From Session : ${sessionScope.userInfo.job}
-            <br/><br/>
-            <h4>DB Conn. Test</h4>
-            <button id="userSearchBtn" type="button" class="btn btn-block btn-primary btn-sm text-center" style="width:100px">사용자 조회</button>
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">User List</h3>
+                    <h3 class="box-title">List</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th style="width:5%">#</th>
-                                <th  class="text-center"style="width:10%">ID</th>
-                                <th class="text-center" style="width:10%">성명</th>
-                                <th class="text-center" style="width:20%">E-Mail</th>
-                                <th class="text-center" style="width:15%">소속</th>
-                                <th class="text-center" style="width:15%">담당 업무</th>
-                                <th class="text-center" style="width:10%">생년월일</th>
-                                <th class="text-center" style="width:15%">가입일</th>
+                                <th style="width:5%">No.</th>
+                                <th  class="text-center"style="width:50%">제목</th>
+                                <th class="text-center" style="width:15%">조회수</th>
+                                <th class="text-center" style="width:15%">작성자</th>
+                                <th class="text-center" style="width:15%">작성일</th>
                             </tr>
                         </thead>
                         <tbody id="listbody">
                             <tr>
-                                <td colspan="8" class="text-gray text-center">검색 결과가 없습니다.</td>
+                                <td colspan="5" class="text-gray text-center">검색 결과가 없습니다.</td>
                             </tr>
                         </tbody>
                     </table>

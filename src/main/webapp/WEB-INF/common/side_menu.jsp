@@ -39,7 +39,7 @@
             <li class="header">메뉴를 골라주세요</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li id="freeBoard"><a href="/freeBoard"><i class="fa fa-link"></i> <span>자유 게시판</span></a></li>
+            <li id="freeBoard"><a href="/board/freeBoard"><i class="fa fa-link"></i> <span>자유 게시판</span></a></li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                     <span class="pull-right-container">
