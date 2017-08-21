@@ -36,8 +36,11 @@ public class IndexController {
         //String msg = systemResource.getString("result.msg.success");
         String msg = config_success;
 
+
+
         model.addAttribute("msg", msg);
         model.addAttribute("data", "Nicekkong's World!!");
+
 
         //logger.info(" >>>> Server Env : " + serverEnv);
         return "index";

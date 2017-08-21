@@ -145,6 +145,12 @@
 
     </div>
     <!-- /.login-box-body -->
+   data : ${data}
+    <%--result : ${result.weather.dust[0].pm10.grade}--%>
+    <%--result : ${result.weather.dust[0].pm10.value}--%>
+
+    xxx : ${result}
+
 </div>
 <!-- /.login-box -->
 
