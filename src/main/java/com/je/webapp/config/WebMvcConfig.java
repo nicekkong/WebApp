@@ -64,7 +64,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.setOrder(0);
-        registry.addViewController("/").setViewName("redirect:/index");
+        registry.addViewController("/").setViewName("redirect:/game");
     }
 
 

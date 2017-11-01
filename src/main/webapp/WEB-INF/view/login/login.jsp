@@ -148,8 +148,14 @@
    data : ${data}
     <%--result : ${result.weather.dust[0].pm10.grade}--%>
     <%--result : ${result.weather.dust[0].pm10.value}--%>
-
+    <hr/>
     xxx : ${result}
+    <hr/>
+    ${result.weather.dust[0].station.name} =>
+    ${result.weather.dust[0].pm10.grade}(${result.weather.dust[0].pm10.value})
+
+    <hr/>
+    NICEKKONG's World
 
 </div>
 <!-- /.login-box -->

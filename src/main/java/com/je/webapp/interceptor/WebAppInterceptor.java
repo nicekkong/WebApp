@@ -26,17 +26,17 @@ public class WebAppInterceptor extends HandlerInterceptorAdapter {
             isAjaxCall = true;
         }
 
-        try {
-            // 로그인 상태를 확인한다.
-            if (!isLogin(request)) {
-                displayLoginPage(response, isAjaxCall); // Ajax 호출 여부에 따라 처리한다
-                return false;
-            }
-        } catch (Exception e) {
-            logger.error("preHadler Error~!!", e);
-            //response.sendRedirect("/user/login");
-            return false;
-        }
+//        try {
+//            // 로그인 상태를 확인한다.
+//            if (!isLogin(request)) {
+//                displayLoginPage(response, isAjaxCall); // Ajax 호출 여부에 따라 처리한다
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            logger.error("preHadler Error~!!", e);
+//            //response.sendRedirect("/user/login");
+//            return false;
+//        }
 
         return true;
 

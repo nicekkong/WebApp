@@ -70,7 +70,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
 
-        logger.info(" ===> /user/login called");
+        logger.debug(" ===> /user/login called");
 
         ApiUtil apiUtil = new ApiUtil();
 

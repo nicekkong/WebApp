@@ -1,6 +1,9 @@
 package com.je.webapp.controller;
 
+import com.je.webapp.Domain.MemberInfo;
+import com.je.webapp.Domain.User;
 import com.je.webapp.form.ResultForm;
+import com.je.webapp.service.GameService;
 import com.je.webapp.service.IndexService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 //@RequestMapping(value = "/index")
@@ -20,14 +25,110 @@ public class IndexController {
 	
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
     private final static String serverEnv = System.getProperty("spring.profiles.active");
     //private final static SystemResource systemResource = SystemResource.getInstance();
 
     @Autowired
     private IndexService indexService;
 
+    @Autowired
+    private GameService gameService;
+
     @Value("${result.msg.success}")
     String config_success;
+
+    @RequestMapping(value="/game")
+    public String startGame(HttpServletRequest request, Model model) {
+
+
+        return "game";
+    }
+
+
+    @RequestMapping(value = "/game/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> loginGame(@RequestParam(value="name")String inputName, HttpServletRequest request) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        User userInfo = new User();
+
+        try {
+            Map<String, Object> memberInfo =  gameService.loginMember(inputName);
+
+
+            userInfo.setName(inputName);
+            userInfo.setCompany((String)memberInfo.get("group"));
+
+            request.getSession().setAttribute("userInfo", userInfo);
+
+            result.put("memberInfo", memberInfo);
+            result.put("result", "success");
+        } catch (Exception e) {
+
+            logger.error(e.getLocalizedMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/my_game")
+    public String mgGame(HttpServletRequest request, Model model) {
+
+        return "my_game";
+
+    }
+
+
+    @RequestMapping(value = "/getScore")
+    @ResponseBody
+    public List<MemberInfo> getScore(String name) {
+
+        List<MemberInfo> scoreInfo = new ArrayList<>();
+
+//        User userInfo = (User) request.getSession().getAttribute("userInfo");
+//        String name = userInfo.getName();
+
+        try {
+
+            scoreInfo = gameService.getMemberInfo(name);
+
+        } catch (Exception e) {
+
+            logger.error(e.getLocalizedMessage());
+
+        }
+
+        return scoreInfo;
+
+    }
+
+
+    @RequestMapping(value = "/saveScore")
+    @ResponseBody
+    public Map<String, String> saveScore(String name, String group, String game, int score) {
+
+        Map<String, String> result = new HashMap<>();
+        List<MemberInfo> scoreInfo = new ArrayList<>();
+
+//        User userInfo = (User) request.getSession().getAttribute("userInfo");
+//        String name = userInfo.getName();
+
+        try {
+            gameService.insertScore(name, group, game, score);
+        } catch (Exception e) {
+
+            logger.error(e.getLocalizedMessage());
+
+        }
+
+        result.put("result", "success");
+
+        return result;
+
+    }
+
 
 
     @RequestMapping(value = "/index")
@@ -40,6 +141,7 @@ public class IndexController {
 
         model.addAttribute("msg", msg);
         model.addAttribute("data", "Nicekkong's World!!");
+
 
 
         //logger.info(" >>>> Server Env : " + serverEnv);
