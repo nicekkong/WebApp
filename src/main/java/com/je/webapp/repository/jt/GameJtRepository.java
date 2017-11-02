@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class GameJtRepository {
@@ -93,5 +95,85 @@ public class GameJtRepository {
                 .addValue("score", score);
 
         jt.update(GameQuery.INSERT_SCORE, param);
+    }
+
+    public List<Map<String, String>> q1() {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("", "");
+        return jt.query(GameQuery.Q1, param, this::q1MapRow);
+    }
+    private Map<String, String> q1MapRow(ResultSet rs, int row) throws SQLException {
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("c1", rs.getString("c1"));
+        result.put("c2", rs.getString("c2"));
+
+        return result;
+    }
+
+    public List<Map<String, String>> q2() {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("", "");
+        return jt.query(GameQuery.Q2, param, this::q2MapRow);
+    }
+    private Map<String, String> q2MapRow(ResultSet rs, int row) throws SQLException {
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("c1", rs.getString("c1"));
+        result.put("c2", rs.getString("c2"));
+
+        return result;
+    }
+
+    public List<Map<String, String>> q3() {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("", "");
+        return jt.query(GameQuery.Q3, param, this::q3MapRow);
+    }
+    private Map<String, String> q3MapRow(ResultSet rs, int row) throws SQLException {
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("c1", rs.getString("c1"));
+        result.put("c2", rs.getString("c2"));
+
+        return result;
+    }
+
+    public List<Map<String, String>> q4() {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("", "");
+        return jt.query(GameQuery.Q4, param, this::q4MapRow);
+    }
+    private Map<String, String> q4MapRow(ResultSet rs, int row) throws SQLException {
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("c1", rs.getString("c1"));
+        result.put("c2", rs.getString("c2"));
+
+        return result;
+    }
+
+    public List<Map<String, String>> q5() {
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("", "");
+        return jt.query(GameQuery.Q5, param, this::q5MapRow);
+    }
+    private Map<String, String> q5MapRow(ResultSet rs, int row) throws SQLException {
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("c1", rs.getString("c1"));
+        result.put("c2", rs.getString("c2"));
+
+        return result;
     }
 }

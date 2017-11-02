@@ -3,6 +3,7 @@ package com.je.webapp.controller;
 import com.je.webapp.Domain.MemberInfo;
 import com.je.webapp.Domain.User;
 import com.je.webapp.form.ResultForm;
+import com.je.webapp.repository.jt.GameJtRepository;
 import com.je.webapp.service.GameService;
 import com.je.webapp.service.IndexService;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class IndexController {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private GameJtRepository gameJtRepository;
 
     @Value("${result.msg.success}")
     String config_success;
@@ -127,7 +131,50 @@ public class IndexController {
 
         return result;
 
+
+
     }
+
+
+    @RequestMapping(value = "/admin")
+    @ResponseBody
+    public Map<String, Object> admin() {
+
+        Map<String, Object> result = new HashMap<>();
+
+        List<Map<String, String>> q1 = new ArrayList<>();
+        List<Map<String, String>> q2 = new ArrayList<>();
+        List<Map<String, String>> q3 = new ArrayList<>();
+        List<Map<String, String>> q4 = new ArrayList<>();
+        List<Map<String, String>> q5 = new ArrayList<>();
+
+        try {
+            q1 = gameJtRepository.q1();
+            q2 = gameJtRepository.q2();
+            q3 = gameJtRepository.q3();
+            q4 = gameJtRepository.q4();
+            q5 = gameJtRepository.q5();
+        } catch (Exception e) {
+
+            logger.error(e.getLocalizedMessage());
+
+        }
+
+        result.put("myteam", q1);
+        result.put("teamCnt", q2);
+        result.put("teamScore", q3);
+        result.put("myTotScore", q4);
+        result.put("mySumScore", q5);
+
+
+        result.put("result", "success");
+
+        return result;
+
+
+    }
+
+
 
 
 

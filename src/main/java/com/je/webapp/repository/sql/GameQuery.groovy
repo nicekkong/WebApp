@@ -36,4 +36,42 @@ class GameQuery {
                     VALUES (:name, :group, :game, :score)
 
     """
+
+    public static String Q1 = """
+        SELECT  member as c1 , group_name as c2
+                FROM  cm_group_member
+        GROUP BY member
+    """
+
+    // 조별 인원
+    public static String Q2 = """
+        SELECT  group_name as c1 , count(*) as c2
+        FROM  cm_group_member
+        GROUP BY group_name
+    """
+
+    // 조별 총점
+    public static String Q3 = """
+        SELECT  group_name as c1, SUM(score) as c2
+        FROM  cm_member_info
+        GROUP BY group_name
+    """
+
+    // 개인 총점
+    public static String Q4 = """
+        SELECT  name as c1, SUM(score) as c2
+        FROM  cm_member_info
+        GROUP BY name
+        ORDER BY SUM(score) desc
+    """
+
+    // 개인별 최고 점수
+    public static String Q5 = """
+        SELECT  name as c1 , MAX(score) as c2
+        FROM  cm_member_info
+        GROUP BY name
+        ORDER BY MAX(score) desc
+    """
+
+
 }
